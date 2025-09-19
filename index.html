@@ -1,68 +1,161 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PulseMind™ Demo – Garmin</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PulseMind™ Demo — Garmin Integration</title>
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="Concept demo: Garmin Connect ↔ PulseMind™. Live preview, OAuth connect, and sample insights." />
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f9fc;
-      margin: 0;
-      padding: 0;
-      text-align: center;
+    :root{
+      --bg:#0b0b0d;
+      --panel:#121217;
+      --muted:#9aa0a6;
+      --text:#e9eaee;
+      --pm:#9b59b6;          /* PulseMind violet */
+      --garmin:#007cc3;      /* Garmin blue */
+      --ring: 0 0 0 2px rgba(155,89,182,.35);
+      --radius:14px;
     }
-    header {
-      background: #000;
-      color: #fff;
-      padding: 20px;
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+    a{color:inherit}
+    .wrap{max-width:980px;margin:0 auto;padding:24px}
+    /* --- sticky header --- */
+    .hdr{
+      position:sticky; top:0; z-index:10;
+      background:rgba(0,0,0,.75); backdrop-filter:saturate(1.2) blur(8px);
+      border-bottom:1px solid rgba(255,255,255,.06);
     }
-    header img {
-      height: 40px;
-      vertical-align: middle;
+    .hdr__in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 20px}
+    .brand{display:flex;align-items:center;gap:14px}
+    .glogo{height:28px;filter:brightness(0) invert(1)} /* bílé logo na tmavém pozadí */
+    .dot{width:6px;height:6px;border-radius:50%;background:var(--muted);opacity:.6}
+    .pm{font-weight:800;letter-spacing:.2px;color:var(--pm);text-decoration:none}
+    .pm:hover{opacity:.9}
+    .cta{display:inline-flex;gap:10px;align-items:center;background:linear-gradient(135deg,var(--garmin),#34b3ff);
+         color:white;border:none;border-radius:999px;padding:10px 16px;font-weight:700;text-decoration:none}
+    .cta:active{transform:translateY(1px)}
+    /* --- hero panel --- */
+    .hero{background:linear-gradient(180deg,rgba(255,255,255,.05),transparent);
+          border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); padding:28px; margin-top:18px}
+    .badge{display:inline-block;font-size:12px;padding:4px 9px;border-radius:999px;background:#0f2230;color:#bfe6ff;border:1px solid #1c3a52}
+    h1{margin:10px 0 6px;font-size:28px;line-height:1.2}
+    p.lead{color:var(--muted);margin:0 0 14px}
+    /* --- cards --- */
+    .grid{display:grid;gap:16px;margin:22px 0;grid-template-columns:1fr}
+    @media(min-width:760px){ .grid{grid-template-columns:1fr 1fr} }
+    .card{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px}
+    .card h3{margin:0 0 8px;font-size:16px}
+    .small{color:var(--muted);font-size:14px}
+    input[type="file"]{display:block;width:100%;padding:16px;border:1px dashed rgba(255,255,255,.2);
+       border-radius:12px;background:#0e0e12;color:var(--muted)}
+    .btn{display:inline-flex;align-items:center;gap:8px;background:#1a1a22;border:1px solid rgba(255,255,255,.14);
+         padding:10px 14px;border-radius:10px;text-decoration:none;color:var(--text)}
+    .btn:hover{box-shadow:var(--ring)}
+    pre{
+      margin:12px 0 0; padding:12px; background:#0e0f13;border:1px solid rgba(255,255,255,.06);
+      border-radius:10px; max-height:280px; overflow:auto; font-family:ui-monospace,SFMono-Regular,Consolas,Menlo,monospace;
+      font-size:12.5px; color:#d6dde8;
     }
-    h1 {
-      color: #333;
-      margin-top: 30px;
-    }
-    p {
-      color: #555;
-      font-size: 18px;
-    }
-    .button {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 12px 24px;
-      background: #007cc3; /* Garmin blue */
-      color: #fff;
-      font-weight: bold;
-      border-radius: 6px;
-      text-decoration: none;
-    }
-    footer {
-      margin-top: 50px;
-      font-size: 14px;
-      color: #777;
-    }
+    footer{color:var(--muted);font-size:12px;text-align:center;margin:28px 0 30px}
   </style>
 </head>
 <body>
-  <header>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Garmin_logo.svg" alt="Garmin Logo" />
-    <span> + </span>
-    <img src="https://fuegoblade.com/logo.png" alt="PulseMind Logo" />
+
+  <!-- Sticky header: Garmin + PulseMind -->
+  <header class="hdr">
+    <div class="hdr__in wrap">
+      <div class="brand">
+        <a href="https://www.garmin.com" target="_blank" rel="noopener">
+          <img class="glogo"
+               src="https://upload.wikimedia.org/wikipedia/commons/9/96/Garmin_logo.svg"
+               alt="GARMIN" />
+        </a>
+        <span class="dot"></span>
+        <a class="pm" href="https://fuegoblade.com" target="_blank" rel="noopener">PulseMind™</a>
+      </div>
+
+      <!-- (volitelně) přímé přihlášení; můžeš změnit na svůj OAuth endpoint -->
+      <a class="cta" href="#" onclick="alert('OAuth wiring goes here ➜ /api/oauth/connect');return false;">
+        Connect with Garmin
+      </a>
+    </div>
   </header>
 
-  <h1>PulseMind™ Demo – Garmin Integration</h1>
-  <p>
-    Welcome to the evaluation demo.<br />
-    Connect Garmin health & activity data with PulseMind™ AI for smart insights.
-  </p>
+  <!-- Hero -->
+  <main class="wrap">
+    <section class="hero">
+      <span class="badge">Garmin Preview</span>
+      <h1>PulseMind™ Demo — Garmin Integration</h1>
+      <p class="lead">
+        Concept demo s jednoduchou logikou. Žádné proprietární váhy modelu ani produkční logika zde nejsou –
+        cílem je ukázat UX a tok dat <strong>Garmin Connect → PulseMind™</strong>.
+      </p>
+    </section>
 
-  <a class="button" href="https://connect.garmin.com/oauthConfirm">Connect with Garmin</a>
+    <!-- Cards -->
+    <section class="grid">
+      <!-- Data source -->
+      <div class="card">
+        <h3>1) Data source</h3>
+        <p class="small">
+          Výchozí zdroj: <strong style="color:#bfe6ff">Garmin Connect</strong>.
+          Pro demo můžeš nahrát i JSON (stejné pole jako dříve: <code>date</code>, <code>hr_rest</code>, <code>rmssd</code>,
+          <code>sleep_hours</code>, <code>load</code>).
+        </p>
+        <label class="small" for="json">Upload JSON…</label>
+        <input id="json" type="file" accept=".json,application/json" />
+        <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn" type="button" onclick="loadSample()">Load sample_week.json</button>
+          <button class="btn" type="button" onclick="clearBox()">Clear</button>
+        </div>
+        <pre id="box" aria-label="data-preview">// waiting for data…</pre>
+      </div>
 
-  <footer>
-    &copy; 2025 Fuego & Blade™ · PulseMind™ Demo for Garmin
-  </footer>
+      <!-- About AI -->
+      <div class="card">
+        <h3>2) What the AI returns (preview)</h3>
+        <p class="small">
+          PulseMind™ aplikuje explainable AI: denní readiness, predikci přetížení, spánkové doporučení,
+          a krátké vysvětlení hlavních signálů (HRV, klidový tep, spánek, tréninková zátěž).
+          Níže je ukázka struktury výstupu pro demo.
+        </p>
+        <pre>{
+  "readiness": 84,
+  "risk": "low",
+  "key_signals": ["HRV rising","Resting HR stable","Load within zone"],
+  "advice": "Keep today at base-to-moderate. Aim for 7.5h sleep."
+}</pre>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      Data source: <a href="https://connect.garmin.com" target="_blank" rel="noopener" style="color:#bfe6ff">Garmin Connect</a> •
+      Analysis by <a href="https://fuegoblade.com" target="_blank" rel="noopener" style="color:var(--pm)">PulseMind™</a><br/>
+      © 2025 Fuego &amp; Blade • PulseMind™ Demo for Garmin
+    </footer>
+  </main>
+
+  <script>
+    const $ = q => document.querySelector(q);
+    function loadSample(){
+      const sample = [{"date":"2025-08-25","hr_rest":52,"rmssd":58,"sleep_hours":7.2,"load":320}];
+      $('#box').textContent = JSON.stringify(sample,null,2);
+    }
+    function clearBox(){ $('#box').textContent = '// waiting for data…'; $('#json').value=''; }
+    $('#json').addEventListener('change', e=>{
+      const f = e.target.files?.[0]; if(!f) return;
+      const r = new FileReader();
+      r.onload = () => { try{
+          const data = JSON.parse(r.result);
+          $('#box').textContent = JSON.stringify(data,null,2);
+        }catch(err){ $('#box').textContent = 'Invalid JSON'; }
+      };
+      r.readAsText(f);
+    });
+  </script>
 </body>
 </html>
