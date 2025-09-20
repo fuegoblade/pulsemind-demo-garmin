@@ -7,118 +7,101 @@
   <style>
     :root{
       --bg:#0b0c0d; --card:#121417; --ink:#f5f7fa; --muted:#98a2ad;
-      --accent:#00a3ff; --border:#1f2328; --chip:#0e1b22; --pm:#BF00FF; --gm:#007CC3;
+      --accent:#00a3ff; --border:#1f2328; --chip:#0e1b22;
+      --pm:#BF00FF; --garmin:#007CC3;
     }
     *{box-sizing:border-box}
     body{margin:0;background:var(--bg);color:var(--ink);
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;line-height:1.45}
-    .wrap{max-width:900px;margin:32px auto;padding:0 16px}
-    header{position:sticky;top:0;z-index:10;background:rgba(11,12,13,.9);backdrop-filter:saturate(140%) blur(6px);
-      border-bottom:1px solid var(--border)}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px}
+    a{color:var(--accent);text-decoration:none}
+    .wrap{max-width:980px;margin:0 auto;padding:0 16px 56px}
+    /* Sticky header */
+    .top{position:sticky;top:0;z-index:10;background:rgba(11,12,13,.9);
+      backdrop-filter:saturate(120%) blur(6px);border-bottom:1px solid var(--border)}
+    .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px}
     .brand{display:flex;align-items:center;gap:16px}
-    .pm{font-weight:800;color:var(--pm)}
-    .gm{height:20px}
-    .cta{padding:10px 16px;border-radius:999px;background:var(--accent);border:1px solid #0597ea;color:#001018;font-weight:700}
-
-    h1{font-size:28px;margin:16px 0 6px}
-    .badge{display:inline-block;font-size:12px;padding:3px 8px;border-radius:999px;border:1px solid var(--border);
-      background:var(--chip);color:var(--muted);margin-left:8px}
+    .pm{font-weight:900;letter-spacing:.3px;color:var(--pm)}
+    .garmin-img{height:18px;opacity:.95}
+    .cta{padding:10px 14px;border-radius:10px;border:1px solid #0597ea;
+      background:var(--accent);color:#001018;font-weight:700}
+    h1{font-size:28px;margin:20px 0 6px}
+    .badge{display:inline-block;font-size:12px;padding:3px 8px;border-radius:999px;
+      border:1px solid var(--border);background:var(--chip);color:var(--muted);margin-left:8px}
     p.small{color:var(--muted);margin:6px 0 20px}
 
     .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin:18px 0}
     .row{display:flex;gap:12px;flex-wrap:wrap}
     .row>*{flex:1 1 260px}
-    textarea{width:100%;min-height:260px;background:#0d0f12;border:1px solid var(--border);border-radius:10px;color:var(--ink);
-      padding:10px;font-family:ui-monospace,Menlo,Consolas}
     button{padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:#101418;color:var(--ink);cursor:pointer}
     button.primary{background:var(--accent);border-color:#0597ea;color:#001018;font-weight:700}
     button:active{transform:translateY(1px)}
     label.file{display:inline-block;padding:10px 14px;border-radius:10px;border:1px dashed var(--border);cursor:pointer;background:#0d1013}
     input[type=file]{display:none}
-    input[type=radio]{accent-color:#0ea5ff}
+    textarea{width:100%;min-height:260px;background:#0d0f12;border:1px solid var(--border);border-radius:10px;color:#cdd6e1;padding:12px;font-family:ui-monospace,Menlo,Consolas}
 
     .kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
     .kpi{padding:14px;border-radius:10px;border:1px solid var(--border);background:#0e1014}
     .kpi .label{color:var(--muted);font-size:12px;margin-bottom:4px}
     .kpi .value{font-size:28px;font-weight:800}
-    h2{font-size:20px;margin:0 0 8px}
-    ul.small{color:var(--muted);padding-left:18px;margin:6px 0}
+
+    .radio{display:flex;gap:16px;align-items:center;margin:8px 0 6px}
+    .radio label{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border:1px solid var(--border);border-radius:999px;background:#0d1013}
+    .hint{color:var(--muted);font-size:12px;margin-top:4px}
     pre{white-space:pre-wrap;background:#0d0f12;border:1px solid var(--border);border-radius:10px;color:#cdd6e1;padding:12px;overflow:auto}
     footer{color:var(--muted);text-align:center;margin:20px 0}
-    a{color:var(--accent);text-decoration:none}
-
-    .status{margin-top:6px;font-size:14px;color:var(--muted)}
   </style>
 </head>
 <body>
-  <header>
-    <div class="top">
+  <div class="top">
+    <div class="bar">
       <div class="brand">
         <div class="pm">PulseMind™</div>
-        <img src="assets/garmin-logo.png" alt="GARMIN" class="gm" />
+        <!-- Lokální logo – už máš v repo: assets/garmin-logo.png -->
+        <img src="assets/garmin-logo.png" alt="Garmin" class="garmin-img" />
       </div>
-      <a class="cta" href="#" aria-label="Connect with Garmin">Connect with Garmin</a>
+      <a class="cta" href="https://connect.garmin.com" target="_blank" rel="noopener noreferrer">Connect with Garmin</a>
     </div>
-  </header>
+  </div>
 
   <div class="wrap">
     <h1>PulseMind™ Demo — Garmin Integration <span class="badge">Garmin Preview</span></h1>
-    <p class="small">Concept demo with simplified logic. No proprietary model weights or production logic are included.</p>
-
     <p class="small">
-      Data source:
-      <a href="https://connect.garmin.com" style="color:var(--gm);font-weight:600" target="_blank" rel="noopener">Garmin Connect</a>
-      • Analysis by
-      <a href="https://fuegoblade.com" style="color:var(--pm);font-weight:600" target="_blank" rel="noopener">PulseMind™</a>
+      Concept demo with simplified logic. No proprietary model weights or production logic are included.
+    </p>
+    <p class="small">
+      Data source: <a href="https://connect.garmin.com" target="_blank" rel="noopener noreferrer" style="color:var(--garmin);font-weight:600">Garmin Connect</a>
+      • Analysis by <a href="https://fuegoblade.com" target="_blank" rel="noopener noreferrer" style="color:var(--pm);font-weight:600">PulseMind™</a>
     </p>
 
     <!-- 1) DATA -->
     <div class="card">
       <h2>1) Data</h2>
-      <p class="small">Pull live sample from the demo API or upload your own JSON with fields:
-        <code>date</code>, <code>hr_rest</code>, <code>rmssd</code>, <code>sleep_hours</code>, <code>load</code>.
-      </p>
-
-      <div class="row" style="margin-bottom:8px">
-        <button id="loadApi" class="primary">Load from /api/garmin/latest</button>
+      <p class="small">Pull live sample from the demo API or upload your own JSON with fields: <code>date</code>, <code>hr_rest</code>, <code>rmssd</code>, <code>sleep_hours</code>, <code>load</code>.</p>
+      <div class="row">
+        <button id="loadSample" class="primary">Load from /api/garmin/latest</button>
+        <label class="file">
+          <input id="file" type="file" accept=".json,application/json" />
+          Upload JSON…
+        </label>
+        <button id="clear">Clear</button>
       </div>
-
-      <label class="file">
-        <input id="file" type="file" accept=".json,application/json"> Upload JSON…
-      </label>
-      <button id="clear" style="margin-left:8px">Clear</button>
-
-      <textarea id="json" placeholder='[
-  {"date":"2025-08-25","hr_rest":52,"rmssd":58,"sleep_hours":7.2,"load":320},
-  …
-]'></textarea>
-
-      <div id="dataStatus" class="status">// waiting for data…</div>
+      <textarea id="json" placeholder='[{"date":"2025-08-25","hr_rest":52,"rmssd":58,"sleep_hours":7.2,"load":320}, …]'></textarea>
+      <div class="hint">Tip: The loader accepts both a plain array or an object wrapper like <code>{ ok:true, data:[…] }</code>.</div>
     </div>
 
     <!-- 2) EVALUATE -->
     <div class="card">
       <h2>2) Evaluate</h2>
-      <p class="small">Runs a simplified readiness & overload mock. Choose one scenario to preview PulseMind’s live adjustments.</p>
+      <p class="small">Runs a simplified readiness &amp; overload mock. Choose one scenario to preview PulseMind’s live adjustments.</p>
 
-      <!-- EXCLUSIVE SCENARIO SELECTOR -->
-      <div class="row" style="gap:16px; align-items:center; margin:8px 0 12px">
-        <label style="display:flex;align-items:center;gap:8px">
-          <input type="radio" name="scenario" value="none" id="sc_none" checked>
-          None
-        </label>
-        <label style="display:flex;align-items:center;gap:8px">
-          <input type="radio" name="scenario" value="flu" id="sc_flu">
-          Flu (temporary stressor)
-        </label>
-        <label style="display:flex;align-items:center;gap:8px">
-          <input type="radio" name="scenario" value="sleep" id="sc_sleep">
-          Sleep Debt (−10%)
-        </label>
+      <!-- Exclusive scenarios -->
+      <div class="radio" role="radiogroup" aria-label="Scenario">
+        <label><input type="radio" name="scenario" value="none" checked /> None</label>
+        <label><input type="radio" name="scenario" value="flu" /> Flu (temporary stressor)</label>
+        <label><input type="radio" name="scenario" value="sleep" /> Sleep Debt (−10%)</label>
       </div>
 
-      <div class="row">
+      <div class="row" style="margin-top:6px">
         <button id="eval" class="primary">Evaluate</button>
       </div>
 
@@ -133,12 +116,10 @@
         </div>
       </div>
 
-      <div id="scStatus" class="status">Scenario: None</div>
-
-      <h2 style="margin-top:16px;">Notes</h2>
+      <h3 style="margin-top:16px">Notes</h3>
       <ul class="small">
-        <li><strong>Readiness</strong>: 0–100 (higher = better). Built from HRV, sleep, and recent training load.</li>
-        <li><strong>Risk</strong>: Low / Moderate / High from acute:chronic load and HRV drift.</li>
+        <li><b>Readiness:</b> 0–100 (higher = better). Built from HRV, sleep, and recent training load.</li>
+        <li><b>Risk:</b> Low / Moderate / High from acute:chronic load and HRV drift.</li>
         <li>Scenario selector is exclusive (only one active at a time) to avoid stacked effects.</li>
       </ul>
     </div>
@@ -153,67 +134,129 @@
   </div>
 
   <script>
-    // -------- utilities --------
-    const $ = s => document.querySelector(s);
-    const setKPIs = (rdy, risk) => { $('#ready').textContent = rdy; $('#risk').textContent = risk; };
-    const log = msg => { $('#log').textContent = msg; };
-
-    // simple evaluation (unchanged base)
-    function evaluate(data){
-      const n = data.length;
-      const avg = arr => arr.reduce((a,b)=>a+b,0) / (arr.length||1);
-      const hrvs=data.map(d=>+d.rmssd), sleeps=data.map(d=>+d.sleep_hours), loads=data.map(d=>+d.load);
-      const hrvAvg=avg(hrvs), sleepAvg=avg(sleeps), loadSum=loads.reduce((a,b)=>a+b,0);
-      const norm=(x,min,max)=>Math.max(0,Math.min(1,(x-min)/(max-min)));
-      const readiness=Math.round(100*(0.45*norm(hrvAvg,30,100)+0.35*norm(sleepAvg,5,9)+0.20*(1-norm(loadSum/n,150,600))));
-      const k=Math.min(7,n),recent=loads.slice(-k),acute=avg(recent),chronic=avg(loads),ratio=chronic>0?acute/chronic:0;
-      const hrvDrift=(hrvs[hrvs.length-1]??hrvAvg)-hrvAvg;
-      let risk="Low"; if(ratio>1.3||hrvDrift<-5)risk="Moderate"; if(ratio>1.6||hrvDrift<-10)risk="High";
-      return {readiness,risk,details:{hrvAvg,sleepAvg,loadAvg:avg(loads),ratio,hrvDrift},data};
-    }
-
-    // sample loader from API
-    async function loadFromApi(){
+    // --------- Data loading ----------
+    async function fetchSample(){
+      const out = document.getElementById('json');
       try{
-        $('#dataStatus').textContent = 'Loading /api/garmin/latest…';
         const res = await fetch('/api/garmin/latest');
-        const txt = await res.text();
-        $('#json').value = txt;
-        $('#dataStatus').textContent = 'Sample loaded from API.';
+        const json = await res.json();
+        // Accept both array or wrapper { data:[…] }
+        const payload = Array.isArray(json) ? json : (Array.isArray(json?.data) ? json.data : json);
+        out.value = JSON.stringify(payload, null, 2);
+        log('Sample loaded from API.');
       }catch(err){
-        $('#dataStatus').textContent = 'Failed to load API sample.';
+        out.value = '[/* fetch failed */]';
+        log('API fetch error: ' + String(err));
       }
     }
 
-    // wire UI
-    $('#loadApi').onclick = loadFromApi;
-    $('#clear').onclick = () => { $('#json').value=''; setKPIs('—','—'); log('Cleared.'); $('#dataStatus').textContent='// waiting for data…'; };
-    $('#file').onchange = e => {
-      const f=e.target.files[0]; if(!f) return;
-      const r=new FileReader(); r.onload=()=>{ $('#json').value=r.result; $('#dataStatus').textContent='JSON loaded from file.'; };
+    function setKPIs(rdy, risk){
+      document.getElementById('ready').textContent = rdy;
+      document.getElementById('risk').textContent  = risk;
+    }
+    function log(msg){ document.getElementById('log').textContent = msg; }
+
+    // Core evaluator — works with array or wrapper { data:[…] }
+    function evaluate(data){
+      const arr = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : null);
+      if(!Array.isArray(arr) || arr.length === 0){
+        throw new Error('no valid records found (expected array of daily objects)');
+      }
+
+      const n = arr.length;
+      const avg = a => a.reduce((s,x)=>s+Number(x||0),0)/(a.length||1);
+      const hrvs   = arr.map(d => Number(d.rmssd||0));
+      const sleeps = arr.map(d => Number(d.sleep_hours||0));
+      const loads  = arr.map(d => Number(d.load||0));
+
+      const hrvAvg   = avg(hrvs);
+      const sleepAvg = avg(sleeps);
+      const loadSum  = loads.reduce((s,x)=>s+Number(x||0),0);
+
+      const norm = (x,min,max)=>Math.max(0,Math.min(1,(x-min)/(max-min)));
+      let readiness = Math.round(100*(0.45*norm(hrvAvg,30,100)+
+                                      0.35*norm(sleepAvg,5,9)+
+                                      0.20*(1-norm(loadSum/n,150,600))));
+
+      // Risk from acute:chronic & HRV drift
+      const k = Math.min(7,n);
+      const recent = loads.slice(-k), acute = avg(recent), chronic = avg(loads);
+      const ratio = chronic>0 ? acute/chronic : 0;
+      const hrvDrift = (hrvs[hrvs.length-1] ?? hrvAvg) - hrvAvg;
+
+      let risk = "Low";
+      if(ratio>1.3 || hrvDrift<-5)  risk="Moderate";
+      if(ratio>1.6 || hrvDrift<-10) risk="High";
+
+      return {readiness, risk, details:{hrvAvg, sleepAvg, loadAvg:avg(loads), ratio, hrvDrift}, data:arr};
+    }
+
+    // Scenario helper (exclusive radios)
+    function currentScenario(){
+      const radios = document.querySelectorAll('input[name="scenario"]');
+      for(const r of radios) if(r.checked) return r.value;
+      return 'none';
+    }
+
+    // Wire UI
+    document.getElementById('loadSample').onclick = fetchSample;
+
+    document.getElementById('clear').onclick = ()=>{
+      document.getElementById('json').value='';
+      setKPIs('—','—');
+      log('Cleared.');
+    };
+
+    document.getElementById('file').onchange = e=>{
+      const f = e.target.files[0];
+      if(!f) return;
+      const r = new FileReader();
+      r.onload = ()=>{
+        document.getElementById('json').value = r.result;
+        log('Loaded file into editor.');
+      };
       r.readAsText(f);
     };
 
-    // evaluate with exclusive scenario
-    $('#eval').onclick = () => {
+    document.getElementById('eval').onclick = ()=>{
       try{
-        const d = JSON.parse($('#json').value || '[]');
-        const o = evaluate(d);
+        const raw = document.getElementById('json').value.trim();
+        if(!raw){ setKPIs('—','—'); log('No data: load from API or upload JSON.'); return; }
 
-        // exactly one scenario
-        const selected = document.querySelector('input[name="scenario"]:checked')?.value || 'none';
-        let readinessAdj = o.readiness;
-        if (selected === 'flu') readinessAdj = Math.max(0, readinessAdj - 20);
-        else if (selected === 'sleep') readinessAdj = Math.max(0, Math.round(readinessAdj * 0.9));
+        let parsed;
+        try{ parsed = JSON.parse(raw); }
+        catch(e){ throw new Error('Invalid JSON: '+e.message); }
 
-        setKPIs(readinessAdj, o.risk);
-        $('#scStatus').textContent = 'Scenario: ' + (selected === 'none' ? 'None' : (selected === 'flu' ? 'Flu' : 'Sleep Debt'));
-        log(JSON.stringify(o, null, 2));
+        const base = evaluate(parsed);
+        let finalReadiness = base.readiness;
+        const scn = currentScenario();
+        if(scn==='flu')   finalReadiness = Math.max(0, Math.round(finalReadiness * 0.6)); // stronger hit
+        if(scn==='sleep') finalReadiness = Math.max(0, Math.round(finalReadiness * 0.9)); // -10%
+
+        // simple tie-in of risk to very low readiness
+        let finalRisk = base.risk;
+        if(finalReadiness < 30) finalRisk = 'High';
+        else if(finalReadiness < 50 && finalRisk !== 'High') finalRisk = 'Moderate';
+
+        setKPIs(finalReadiness, finalRisk);
+        log(JSON.stringify({
+          ok:true,
+          summary:{ readiness: finalReadiness, risk: finalRisk },
+          details: base.details,
+          scenario: scn
+        }, null, 2));
       }catch(err){
         setKPIs('—','—');
-        log('Invalid JSON: ' + err.message);
+        log(String(err));
       }
     };
+
+    // Try preload on first open (if textarea empty)
+    window.addEventListener('load', ()=>{
+      if(!document.getElementById('json').value.trim()){
+        fetchSample().catch(()=>{});
+      }
+    });
   </script>
 </body>
 </html>
